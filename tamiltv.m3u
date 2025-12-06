@@ -49,3 +49,7 @@ http://103.140.254.2:3500/live/417.m3u8
 http://87.255.35.150:18855
 #EXTINF:-1 tvg-id="AdithyaTV.in@SD",Adithya TV (576p)
 http://87.255.35.150:18840
+#EXTINF:-1 tvg-id="SunLife.in@SD",Sun Life (576p)
+http://87.255.35.150:18953
+#EXTINF:-1 tvg-id="SirippoliTV.in@SD",Sirippoli TV (576p)
+https://segment.yuppcdn.net/240122/siripoli/playlist.m3u8
