@@ -3,3 +3,49 @@
 https://livestream10.sunnxt.com/DolbyVision/SunTV_HDR/SunTV_HDR_Endpoints/SunTV-HDR10-IN-index.m3u8
 #EXTINF:-1,zeetamil 
 http://tv.cloudcdn.me/live/00:1A:79:17:C1:7F/D9CA0D47A1879/43423.m3u8
+#EXTINF:-1 tvg-id="ColorsTamil.in@SD",Colors Tamil (1080p)
+http://87.255.35.150:18225
+#EXTINF:-1 tvg-id="ZeeTamil.in@SD",Zee Tamil (1080p)
+http://87.255.35.150:18553
+#EXTINF:-1 tvg-id="VijayTakkar.in@SD",Vijay Takkar (576p)
+http://87.255.35.150:18950
+#EXTINF:-1 tvg-id="VijaySuper.in@HD",Vijay Super HD (1080p)
+http://87.255.35.150:18954
+#EXTINF:-1 tvg-id="SunMusic.in@SD",Sun Music (1080p)
+http://87.255.35.150:18821
+#EXTINF:-1 tvg-id="StarVijay.in@HD",Star Vijay HD (1080p)
+http://87.255.35.150:18955
+#EXTINF:-1 tvg-id="SirippoliTV.in@SD",Sirippoli TV (480p)
+https://edge2-moblive.yuppcdn.net/drm1/smil:sirippolitvdrm.smil/manifest.m3u8
+#EXTINF:-1 tvg-id="RajMusixTamil.in@SD",Raj Musix Tamil (576p)
+http://87.255.35.150:18477
+#EXTINF:-1 tvg-id="RajMusixTamil.in@SD",Raj Musix Tamil (1080p)
+http://livestream.rajtv.tv/cluster1/Content/Channel/RajMusix/HLS/master.m3u8
+#EXTINF:-1 tvg-id="RajDigitalPlus.in@SD",Raj Digital Plus (576p)
+http://87.255.35.150:18478
+#EXTINF:-1 tvg-id="RajDigitalPlus.in@SD",Raj Digital Plus (1080p)
+http://livestream.rajtv.tv/cluster1/Content/Channel/RajDigitalPlus/HLS/master.m3u8
+#EXTINF:-1 tvg-id="PolimerTV.in@SD",Polimer TV (720p)
+https://cdn-2.pishow.tv/live/1241/master.m3u8
+#EXTINF:-1 tvg-id="PolimerNews.in@SD",Polimer News (576p)
+https://segment.yuppcdn.net/110322/polimernews/playlist.m3u8
+#EXTINF:-1 tvg-id="PolimerNews.in@SD",Polimer News (576p) [Not 24/7]
+http://14.199.164.20:4001/play/a0lg/index.m3u8
+#EXTINF:-1 tvg-id="KalingaTV.in@SD",Kalinga TV (576p) [Not 24/7]
+http://202.164.50.194:8000/play/a00s/index.m3u8
+#EXTINF:-1 tvg-id="KalaignarTV.in@SD",Kalaignar TV (396p)
+https://segment.yuppcdn.net/240122/kalaignartv/playlist.m3u8
+#EXTINF:-1 tvg-id="KalaignarTV.in@SD",Kalaignar TV (480p)
+https://edge2-moblive.yuppcdn.net/drm1/smil:kalaignartvdrm.smil/chunklist_b996000.m3u8
+#EXTINF:-1 tvg-id="JayaTV.in@SD",Jaya TV (576p)
+http://87.255.35.150:18820
+#EXTINF:-1 tvg-id="JayaTV.in@SD",Jaya TV (1080p)
+http://103.140.254.2:3500/live/419.m3u8
+#EXTINF:-1 tvg-id="JayaMax.in@SD",Jaya Max (576p)
+http://87.255.35.150:18829
+#EXTINF:-1 tvg-id="JMovie.in@SD",J Movie (576p)
+http://103.140.254.2:3500/live/417.m3u8
+#EXTINF:-1 tvg-id="ChuttiTV.in@SD",Chutti TV (576p)
+http://87.255.35.150:18855
+#EXTINF:-1 tvg-id="AdithyaTV.in@SD",Adithya TV (576p)
+http://87.255.35.150:18840
