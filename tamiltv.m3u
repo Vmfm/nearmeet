@@ -75,19 +75,21 @@ https://cdn-3.pishow.tv/live/1247/master.m3u8
 http://87.255.35.150:18839
 #EXTINF:-1 tvg-id="RajTV.in@SD",Raj TV
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/2839e3d1e0f84a2e821c1708d5fdfdf0/index.m3u8
-#EXTINF:-1 tvg-id="KTV.in@SD",KTV (1080p)
+#EXTINF:-1 tvg-id="KTV.in@SD",KTV 
 http://87.255.35.150:18805
-#EXTINF:-1 tvg-id="தென்றல்.in@SD",தென்றல் (1080p)
+#EXTINF:-1 tvg-id="தென்றல்.in@SD",தென்றல்
 https://live.thendralcloud.in/thendraltv/d0dbe915091d400bd8ee7f27f0791303.sdp/chunks.m3u8
-#EXTINF:-1 tvg-id="ஆனந்தம் டி.வி.in@SD",ஆனந்தம் டி.வி (1080p)
+#EXTINF:-1 tvg-id="ஆனந்தம் டி.வி.in@SD",ஆனந்தம் டி.வி
 https://stream.galaxyott.live/live/anandhamtv/index.m3u8
-#EXTINF:-1 tvg-id="மலர் டிவி.in@SD",மலர் டிவி (1080p)
+#EXTINF:-1 tvg-id="மலர் டிவி.in@SD",மலர் டிவி 
 https://server.sscloud7.in/live/malartv/index.m3u8
-#EXTINF:-1 tvg-id="பாரதி-டிவி.in@SD",பாரதி-டிவி (1080p)
+#EXTINF:-1 tvg-id="பாரதி-டிவி.in@SD",பாரதி-டிவி 
 https://server.sscloud7.in/live/bharathitv/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-id="தில்லை-டிவி.in@SD",தில்லை-டிவி (1080p)
+#EXTINF:-1 tvg-id="தில்லை-டிவி.in@SD",தில்லை-டிவி 
 https://stream.onecloudlive.in/tcn/tcntv/index.m3u8
-#EXTINF:-1 tvg-id="stn-tv.in@SD",stn-tv (1080p)
+#EXTINF:-1 tvg-id="stn-tv.in@SD",stn-tv 
 https://play.applelive.in/stntv/stntv.m3u8
-#EXTINF:-1 tvg-id="தென்றல்-மதுரை.in@SD",தென்றல்-மதுரை (1080p)
+#EXTINF:-1 tvg-id="தென்றல்-மதுரை.in@SD",தென்றல்-மதுரை
 https://ipcloud.live/thendralmdu/madurai/index.m3u8
+#EXTINF:-1 tvg-id="மலர் டிவி.in@SD",மலர் டிவி
+https://sscloud7.com/live/malartv/index.m3u8
