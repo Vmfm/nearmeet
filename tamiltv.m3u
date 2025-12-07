@@ -77,3 +77,7 @@ http://87.255.35.150:18839
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/2839e3d1e0f84a2e821c1708d5fdfdf0/index.m3u8
 #EXTINF:-1 tvg-id="KTV.in@SD",KTV (1080p)
 http://87.255.35.150:18805
+#EXTINF:-1 tvg-id="தென்றல்.in@SD",தென்றல் (1080p)
+https://live.thendralcloud.in/thendraltv/d0dbe915091d400bd8ee7f27f0791303.sdp/chunks.m3u8
+#EXTINF:-1 tvg-id="ஆனந்தம் டி.வி.in@SD",ஆனந்தம் டி.வி (1080p)
+https://stream.galaxyott.live/live/anandhamtv/index.m3u8
