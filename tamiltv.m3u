@@ -7,6 +7,10 @@ http://tv.cloudcdn.me/live/00:1A:79:17:C1:7F/D9CA0D47A1879/43423.m3u8
 http://87.255.35.150:18225
 #EXTINF:-1 tvg-id="ZeeTamil.in@SD",Zee Tamil (1080p)
 http://87.255.35.150:18553
+#EXTINF:-1 tvg-id="ZeeThirai.in@SD",Zee Thirai (1080p)
+http://87.255.35.150:18597
+#EXTINF:-1 tvg-id="SunNews.in@SD",Sun News (576p)
+http://87.255.35.150:18852
 #EXTINF:-1 tvg-id="VijayTakkar.in@SD",Vijay Takkar (576p)
 http://87.255.35.150:18950
 #EXTINF:-1 tvg-id="VijaySuper.in@HD",Vijay Super HD (1080p)
