@@ -89,3 +89,5 @@ https://server.sscloud7.in/live/bharathitv/tracks-v1a1/mono.m3u8
 https://stream.onecloudlive.in/tcn/tcntv/index.m3u8
 #EXTINF:-1 tvg-id="stn-tv.in@SD",stn-tv (1080p)
 https://play.applelive.in/stntv/stntv.m3u8
+#EXTINF:-1 tvg-id="தென்றல்-மதுரை.in@SD",தென்றல்-மதுரை (1080p)
+https://ipcloud.live/thendralmdu/madurai/index.m3u8
