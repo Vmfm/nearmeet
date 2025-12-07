@@ -81,3 +81,11 @@ http://87.255.35.150:18805
 https://live.thendralcloud.in/thendraltv/d0dbe915091d400bd8ee7f27f0791303.sdp/chunks.m3u8
 #EXTINF:-1 tvg-id="ஆனந்தம் டி.வி.in@SD",ஆனந்தம் டி.வி (1080p)
 https://stream.galaxyott.live/live/anandhamtv/index.m3u8
+#EXTINF:-1 tvg-id="மலர் டிவி.in@SD",மலர் டிவி (1080p)
+https://server.sscloud7.in/live/malartv/index.m3u8
+#EXTINF:-1 tvg-id="பாரதி-டிவி.in@SD",பாரதி-டிவி (1080p)
+https://server.sscloud7.in/live/bharathitv/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-id="தில்லை-டிவி.in@SD",தில்லை-டிவி (1080p)
+https://stream.onecloudlive.in/tcn/tcntv/index.m3u8
+#EXTINF:-1 tvg-id="stn-tv.in@SD",stn-tv (1080p)
+https://play.applelive.in/stntv/stntv.m3u8
