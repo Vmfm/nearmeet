@@ -93,3 +93,21 @@ https://play.applelive.in/stntv/stntv.m3u8
 https://ipcloud.live/thendralmdu/madurai/index.m3u8
 #EXTINF:-1 tvg-id="மலர் டிவி.in@SD",மலர் டிவி
 https://sscloud7.com/live/malartv/index.m3u8
+#EXTINF:-1 tvg-id="திருமலை-டிவி.in@SD",திருமலை-டிவிி
+https://notvstream.in/thirumalaitv/thirumalaitv.m3u8
+#EXTINF:-1 tvg-id="subi-tv.in@SD",subi-tv
+https://notvstream.in/subitv/subitv.m3u8
+#EXTINF:-1 tvg-id="லியோ-டிவி.in@SD",லியோ-டிவி
+https://ipcloud.live/leotv/leotvhd/index.m3u8
+#EXTINF:-1 tvg-id="எஸ்-டிவி.in@SD",எஸ்-டிவி 
+https://play.applelive.in/stv/stv.m3u8
+#EXTINF:-1 tvg-id="ஆசை-டிவி.in@SD",ஆசை-டிவி
+https://notvstream.in/aasaitv/aasaitv.m3u8
+#EXTINF:-1 tvg-id="ஆலய-மகிமை-டிவி.in@SD",ஆலய-மகிமை-டிவி 
+https://app.ashokadigital.net/aalayamagimaitv/aalayamagimaitv/index.m3u8
+#EXTINF:-1 tvg-id="dheiveegam-tv.in@SD",dheiveegam-tv 
+https://stream.singamcloud.in/Dheiveegamtv/Dheiveegamtv/index.m3u8
+#EXTINF:-1 tvg-id="oscar-tv.in@SD",oscar-tv
+https://account21.livebox.co.in/oscartvhls/live.m3u8
+#EXTINF:-1 tvg-id="temble-tv.in@SD",temble-tv
+https://notvstream.in/tembletv/tembletv.m3u8
