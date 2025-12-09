@@ -113,3 +113,29 @@ https://stream.singamcloud.in/Dheiveegamtv/Dheiveegamtv/index.m3u8
 https://account21.livebox.co.in/oscartvhls/live.m3u8
 #EXTINF:-1 tvg-id="temble-tv.in@SD",temble-tv
 https://notvstream.in/tembletv/tembletv.m3u8
+#EXTINF:-1 tvg-id="யுடிவி-மாயூரம்.in@SD",யுடிவி-மாயூரம்
+https://notvstream.in/utv/utv.m3u8
+#EXTINF:-1 tvg-id="எஸ்எஸ்-டிவி.in@SD",எஸ்எஸ்-டிவி
+https://notvstream.in/sstv/sstv.m3u8
+#EXTINF:-1 tvg-id="அருணை-டிவி.in@SD",அருணை-டிவி
+https://notvstream.in/arunaitv/arunaitv.m3u8
+#EXTINF:-1 tvg-id="என்டிவி-திருச்சி.in@SD",என்டிவி-திருச்சி
+https://notvstream.in/ntv/ntv.m3u8
+#EXTINF:-1 tvg-id="சுபாஷ்-டிவி.in@SD",சுபாஷ்-டிவி 
+https://ipcloud.live/subashtv/subashhd/index.m3u8
+#EXTINF:-1 tvg-id="வீர-டிவி.in@SD",வீர-டிவி
+https://ipcloud.live/veeratv/veeratvhd/index.m3u8
+#EXTINF:-1 tvg-id="துரை-டிவி.in@SD",துரை-டிவி
+https://ipcloud.live/duraitv/live/index.m3u8
+#EXTINF:-1 tvg-id="குமாரி-கதிர்-டிவி.in@SD",குமாரி-கதிர்-டிவி
+https://play.applelive.in/jjmax/jjmax.m3u8
+#EXTINF:-1 tvg-id="ஜெய்சன்-டிவி.in@SD",ஜெய்சன்-டிவி
+https://play.applelive.in/jeysontv/jeysontv.m3u8
+#EXTINF:-1 tvg-id="ஆப்பிள்-டிவி-நாகர்கோவில்.in@SD",ஆப்பிள்-டிவி-நாகர்கோவில்
+https://play.applelive.in/appletv/appletv.m3u8
+#EXTINF:-1 tvg-id="என்டிவி-திருச்சி.in@SD",என்டிவி-திருச்சி
+https://notvstream.in/ntv/ntv.m3u8
+#EXTINF:-1 tvg-id="சுபாஷ்-டிவி.in@SD",சுபாஷ்-டிவி 
+https://ipcloud.live/subashtv/subashhd/index.m3u8
+#EXTINF:-1 tvg-id="வீர-டிவி.in@SD",வீர-டிவி
+https://ipcloud.live/veeratv/veeratvhd/index.m3u8
