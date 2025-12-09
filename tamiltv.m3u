@@ -3,6 +3,8 @@
 https://livestream10.sunnxt.com/DolbyVision/SunTV_HDR/SunTV_HDR_Endpoints/SunTV-HDR10-IN-index.m3u8
 #EXTINF:-1,zeetamil 
 http://tv.cloudcdn.me/live/00:1A:79:17:C1:7F/D9CA0D47A1879/43423.m3u8
+#EXTINF:-1 tvg-id="RJ-tamil-tv.in@SD",RJ-tamil-tv
+https://ipcloud.live/rjtamiltv/rjtamil/index.m3u8
 #EXTINF:-1 tvg-id="ColorsTamil.in@SD",Colors Tamil (1080p)
 http://87.255.35.150:18225
 #EXTINF:-1 tvg-id="ZeeTamil.in@SD",Zee Tamil (1080p)
@@ -133,9 +135,15 @@ https://play.applelive.in/jjmax/jjmax.m3u8
 https://play.applelive.in/jeysontv/jeysontv.m3u8
 #EXTINF:-1 tvg-id="ஆப்பிள்-டிவி-நாகர்கோவில்.in@SD",ஆப்பிள்-டிவி-நாகர்கோவில்
 https://play.applelive.in/appletv/appletv.m3u8
-#EXTINF:-1 tvg-id="என்டிவி-திருச்சி.in@SD",என்டிவி-திருச்சி
-https://notvstream.in/ntv/ntv.m3u8
-#EXTINF:-1 tvg-id="சுபாஷ்-டிவி.in@SD",சுபாஷ்-டிவி 
-https://ipcloud.live/subashtv/subashhd/index.m3u8
-#EXTINF:-1 tvg-id="வீர-டிவி.in@SD",வீர-டிவி
-https://ipcloud.live/veeratv/veeratvhd/index.m3u8
+#EXTINF:-1 tvg-id="விசில்-டிவி.in@SD",விசில்-டிவி
+https://stream.sscloud7.in/live/vishiltv1/index.m3u8
+#EXTINF:-1 tvg-id="mathi-tv.in@SD",mathi-tv
+https://notvstream.in/mathitv/mathitv.m3u8
+#EXTINF:-1 tvg-id="கணேஷ்-டிவி.in@SD",கணேஷ்-டிவிி
+https://live.thendralcloud.in/ganeshtvlive/d0dbe915091d400bd8ee7f27f0791303.sdp/playlist.m3u8
+#EXTINF:-1 tvg-id="குமரன்-டிவி.in@SD",குமரன்-டிவி
+https://stream.rojatv.cloud/kumarantv/gobi/index.m3u8
+#EXTINF:-1 tvg-id="king-tv.in@SD",king-tv
+https://rtmp.bmlive.net/kingtv/kingtv/stream.m3u8
+#EXTINF:-1 tvg-id="msn-tv.in@SD",msn-tv
+https://ipcloud.live/msntv/msntv/index.m3u8
