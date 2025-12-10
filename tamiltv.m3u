@@ -1,6 +1,8 @@
 #nsfw  #m3u8 😅 slow, and unvariable bit 
 #EXTINF:-1,suntv
 https://livestream10.sunnxt.com/DolbyVision/SunTV_HDR/SunTV_HDR_Endpoints/SunTV-HDR10-IN-index.m3u8
+#EXTINF:-1,suntv (HD 4K)
+http://217.20.112.199/suntv/index.m3u8
 #EXTINF:-1,zeetamil 
 http://tv.cloudcdn.me/live/00:1A:79:17:C1:7F/D9CA0D47A1879/43423.m3u8
 #EXTINF:-1 tvg-id="RJ-tamil-tv.in@SD",RJ-tamil-tv
