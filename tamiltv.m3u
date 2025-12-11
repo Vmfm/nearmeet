@@ -149,3 +149,23 @@ https://stream.rojatv.cloud/kumarantv/gobi/index.m3u8
 https://rtmp.bmlive.net/kingtv/kingtv/stream.m3u8
 #EXTINF:-1 tvg-id="msn-tv.in@SD",msn-tv
 https://ipcloud.live/msntv/msntv/index.m3u8
+#EXTINF:-1,ஸ்ட்ராபெர்ரி டிவி
+https://stream.onecloudlive.in/sachintv/strawberrytv/index.m3u8
+#EXTINF:-1,ஆனந்தம்-டிவி-2
+https://stream.galaxyott.live/live/anandhamtv/index.m3u8
+#EXTINF:-1,ultimate-tv
+https://stream.galaxyott.live/live/utv/index.m3u8
+#EXTINF:-1,என்டிசி-டிவி
+https://galaxyott.live/hls/ntv.m3u8
+#EXTINF:-1,வேதா-டிவி
+https://skystream.in/live/vedha6528/index.m3u8
+#EXTINF:-1,விகடன்-டிவி
+https://d35j504z0x2vu2.cloudfront.net/v1/master/0bc8e8376bd8417a1b6761138aa41c26c7309312/vikatan-tv/master.m3u8
+#EXTINF:-1,ஜோதிபாலா-டிவி
+https://anywhere.pwisetthon.com/http://jothibalatv.phoenixcreations.online/jothibalatv/jothibalatv/playlist.m3u8
+#EXTINF:-1,vctn-tv
+https://anywhere.pwisetthon.com/http://ttv.7starcloud.com:1935/vctn/tv/playlist.m3u8
+#EXTINF:-1,visil-max
+https://stream.sscloud7.in/live/vishiltv2/index.m3u8
+#EXTINF:-1,வானவில்-டிவி-கள்ளக்குறிச்சி
+https://anywhere.pwisetthon.com/http://ttv.7starcloud.com:1935/vaanavil/tv/playlist.m3u8
