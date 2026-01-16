@@ -3,6 +3,8 @@
 https://livestream10.sunnxt.com/DolbyVision/SunTV_HDR/SunTV_HDR_Endpoints/SunTV-HDR10-IN-index.m3u8
 #EXTINF:-1,suntv (HD 4K)
 http://217.20.112.199/suntv/index.m3u8
+#EXTINF:-1, k tv (HD 4K)
+https://livestream.sunnxt.com/61477b4c8d8d45d5a49e044cc1dffc60/KTVHDB_IN_index.mpd?|drmScheme=clearkey&drmLicense=351e547391bb45cbac66d2cb9ec0c294:3bd646753f4903eee3b404646c7819d3
 #EXTINF:-1,zeetamil 
 http://tv.cloudcdn.me/live/00:1A:79:17:C1:7F/D9CA0D47A1879/43423.m3u8
 #EXTINF:-1 tvg-id="RJ-tamil-tv.in@SD",RJ-tamil-tv
