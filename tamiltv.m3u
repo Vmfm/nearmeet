@@ -9,6 +9,10 @@ http://tv.cloudcdn.me/live/00:1A:79:17:C1:7F/D9CA0D47A1879/43423.m3u8
 https://ipcloud.live/rjtamiltv/rjtamil/index.m3u8
 #EXTINF:-1 tvg-id="ColorsTamil.in@SD",Colors Tamil (1080p)
 http://87.255.35.150:18225
+#EXTINF:-1 tvg-id="ColorsTamil.in@SD",Colors Tamil (576p)
+http://103.140.254.2:3500/live/1371.m3u8
+#EXTINF:-1 tvg-id="ColorsTamil.in@HD",Colors Tamil HD (1080p)
+http://103.140.254.2:3500/live/429.m3u8
 #EXTINF:-1 tvg-id="ZeeTamil.in@SD",Zee Tamil (1080p)
 http://87.255.35.150:18553
 #EXTINF:-1 tvg-id="ZeeThirai.in@SD",Zee Thirai (1080p)
@@ -21,6 +25,8 @@ http://87.255.35.150:18950
 http://87.255.35.150:18954
 #EXTINF:-1 tvg-id="SunMusic.in@SD",Sun Music (1080p)
 http://87.255.35.150:18821
+#EXTINF:-1 tvg-id="SunMusic.in@HD",Sun Music HD (720p)
+http://15.235.144.106:14055/
 #EXTINF:-1 tvg-id="StarVijay.in@HD",Star Vijay HD (1080p)
 http://87.255.35.150:18955
 #EXTINF:-1 tvg-id="SirippoliTV.in@SD",Sirippoli TV (480p)
@@ -55,8 +61,12 @@ http://87.255.35.150:18829
 http://103.140.254.2:3500/live/417.m3u8
 #EXTINF:-1 tvg-id="ChuttiTV.in@SD",Chutti TV (576p)
 http://87.255.35.150:18855
+#EXTINF:-1 tvg-id="ChuttiTV.in@SD",Chutti TV (576p)
+http://103.140.254.2:3500/live/557.m3u8
 #EXTINF:-1 tvg-id="AdithyaTV.in@SD",Adithya TV (576p)
 http://87.255.35.150:18840
+#EXTINF:-1 tvg-id="AdithyaTV.in@SD",Adithya TV (540p)
+http://103.140.254.2:3500/live/709.m3u8
 #EXTINF:-1 tvg-id="SunLife.in@SD",Sun Life (576p)
 http://87.255.35.150:18953
 #EXTINF:-1 tvg-id="SirippoliTV.in@SD",Sirippoli TV (576p)
@@ -77,10 +87,16 @@ https://cdn-3.pishow.tv/live/1612/master.m3u8
 https://cdn-3.pishow.tv/live/1247/master.m3u8
 #EXTINF:-1 tvg-id="RajTV.in@SD",Raj TV (576p)
 http://87.255.35.150:18839
+#EXTINF:-1 tvg-id="RajMusixTamil.in@SD",Raj Musix Tamil (576p)
+http://103.140.254.2:3500/live/748.m3u8
 #EXTINF:-1 tvg-id="RajTV.in@SD",Raj TV
 https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/2839e3d1e0f84a2e821c1708d5fdfdf0/index.m3u8
 #EXTINF:-1 tvg-id="KTV.in@SD",KTV 
 http://87.255.35.150:18805
+#EXTINF:-1 tvg-id="NationalGeographic.in@HD",National Geographic HD (1080p)
+http://103.178.78.151:7505/play/a12o/index.m3u8
+#EXTINF:-1 tvg-id="NewsTamil24x7.in@SD",News Tamil 24x7 (1080p)
+https://d35j504z0x2vu2.cloudfront.net/v1/master/0bc8e8376bd8417a1b6761138aa41c26c7309312/news-tamil-24x7/index.m3u8
 #EXTINF:-1 tvg-id="முல்லை-டிவி.in@SD",முல்லை-டிவி
 https://ipcloud.live/mullaitv/mullaitv/index.m3u8
 #EXTINF:-1 tvg-id="தென்றல்.in@SD",தென்றல்
