@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Status Hub & Archive</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wa: {
+                            dark: '#0b141a',
+                            panel: '#111b21',
+                            secondary: '#202c33',
+                            light: '#00a884',
+                            hover: '#005c4b',
+                            text: '#e9edef',
+                            muted: '#8696a0',
+                            border: '#222d34'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #111b21; }
+        ::-webkit-scrollbar-thumb { background: #222d34; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #374151; }
+    </style>
+</head>
+<body class="bg-wa-dark text-wa-text h-full flex flex-col font-sans select-none overflow-hidden">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Fullscreen Media Viewer Modal -->
+    <div id="media-modal" class="fixed inset-0 z-50 bg-black/95 hidden flex flex-col justify-between p-4 md:p-8">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img id="modal-avatar" src="" class="w-10 h-10 rounded-full object-cover border border-wa-light" alt="User">
+                <div>
+                    <h4 id="modal-username" class="font-bold text-sm text-white"></h4>
+                    <span id="modal-time" class="text-xs text-wa-muted"></span>
+                </div>
+            </div>
+            <button onclick="closeMediaModal()" class="text-wa-muted hover:text-white text-2xl w-10 h-10 flex items-center justify-center rounded-full bg-wa-secondary/50 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="flex-1 flex items-center justify-center relative my-4 overflow-hidden">
+            <div id="modal-content-container" class="max-w-4xl max-h-full flex items-center justify-center w-full h-full">
+                <!-- Dynamically injected media -->
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-between bg-wa-secondary/80 backdrop-blur p-4 rounded-2xl gap-4 max-w-4xl mx-auto w-full border border-wa-border">
+            <div class="flex items-center gap-6">
+                <button onclick="likeCurrentModalPost()" id="modal-like-btn" class="flex items-center gap-2 text-wa-muted hover:text-rose-500 transition">
+                    <i class="fa-solid fa-heart text-lg"></i>
+                    <span id="modal-like-count" class="font-semibold">0</span>
+                </button>
+                <div class="flex items-center gap-2 text-wa-muted">
+                    <i class="fa-solid fa-eye"></i>
+                    <span id="modal-view-count" class="font-semibold">0</span>
+                </div>
+            </div>
+            <div id="modal-caption" class="text-sm text-wa-text truncate max-w-md"></div>
+        </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="fixed inset-0 z-40 bg-wa-dark flex items-center justify-center p-4">
+        <div class="bg-wa-panel border border-wa-border p-8 rounded-3xl max-w-md w-full shadow-2xl flex flex-col items-center">
+            <div class="w-16 h-16 rounded-full bg-wa-light/20 flex items-center justify-center text-wa-light mb-6 text-3xl">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-2 text-center">WhatsApp Status Hub</h2>
+            <p class="text-wa-muted text-sm mb-6 text-center">Login with your profile to post statuses, view archives, and interact with friends.</p>
+            
+            <form id="login-form" class="w-full flex flex-col gap-4">
+                <div>
+                    <label class="block text-xs uppercase font-semibold text-wa-muted mb-2">Your Display Name</label>
+                    <input type="text" id="login-name" required placeholder="e.g. Alex Morgan" class="w-full bg-wa-secondary border border-wa-border rounded-xl px-4 py-3 text-wa-text focus:outline-none focus:border-wa-light transition">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-semibold text-wa-muted mb-2">Profile Photo URL or Upload</label>
+                    <div class="flex gap-2">
+                        <input type="url" id="login-photo" placeholder="https://example.com/photo.jpg" class="flex-1 bg-wa-secondary border border-wa-border rounded-xl px-4 py-3 text-wa-text focus:outline-none focus:border-wa-light transition">
+                        <label class="cursor-pointer bg-wa-secondary hover:bg-wa-border border border-wa-border px-4 rounded-xl flex items-center justify-center text-wa-light transition" title="Upload Image">
+                            <i class="fa-solid fa-upload"></i>
+                            <input type="file" id="login-photo-file" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="mt-2 bg-wa-light hover:bg-wa-hover text-white font-semibold py-3.5 rounded-xl transition shadow-lg shadow-wa-light/20 flex items-center justify-center gap-2">
+                    <span>Get Started</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP INTERFACE -->
+    <div id="app-screen" class="flex-1 flex flex-col md:flex-row h-full overflow-hidden hidden">
+        
+        <!-- SIDEBAR / NAVIGATION PANEL -->
+        <aside class="w-full md:w-80 bg-wa-panel border-r border-wa-border flex flex-col h-full z-20">
+            <!-- User Header -->
+            <div class="p-4 bg-wa-secondary flex items-center justify-between border-b border-wa-border">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('profile')">
+                    <img id="current-user-avatar" src="" class="w-11 h-11 rounded-full object-cover border-2 border-wa-light" alt="Profile">
+                    <div>
+                        <h3 id="current-user-name" class="font-bold text-white text-sm"></h3>
+                        <span class="text-xs text-wa-light flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-wa-light animate-pulse"></span> Online
+                        </span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="logout()" class="text-wa-muted hover:text-rose-400 p-2 rounded-lg transition" title="Logout">
+                        <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="grid grid-cols-3 p-2 bg-wa-dark border-b border-wa-border gap-1">
+                <button onclick="switchTab('feed')" id="tab-btn-feed" class="py-2.5 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition bg-wa-secondary text-wa-light">
+                    <i class="fa-solid fa-circle-notch text-base"></i>
+                    <span>Statuses</span>
+                </button>
+                <button onclick="switchTab('archive')" id="tab-btn-archive" class="py-2.5 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition text-wa-muted hover:text-wa-text">
+                    <i class="fa-solid fa-box-archive text-base"></i>
+                    <span>Archive</span>
+                </button>
+                <button onclick="switchTab('profile')" id="tab-btn-profile" class="py-2.5 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition text-wa-muted hover:text-wa-text">
+                    <i class="fa-solid fa-user-gear text-base"></i>
+                    <span>My Profile</span>
+                </button>
+            </div>
+
+            <!-- Sidebar Content Scroll Area -->
+            <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+                <!-- Quick Status Creator Card -->
+                <div class="bg-wa-secondary/60 border border-wa-border rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-bold text-sm text-white flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-wa-light"></i> Post Status (24h)
+                        </h4>
+                        <span id="cooldown-timer" class="text-xs text-wa-muted">Ready</span>
+                    </div>
+                    <form id="status-form" class="flex flex-col gap-3">
+                        <div>
+                            <select id="status-type" onchange="toggleMediaType()" class="w-full bg-wa-dark border border-wa-border rounded-xl px-3 py-2 text-xs text-wa-text focus:outline-none focus:border-wa-light">
+                                <option value="text">Text Status Only</option>
+                                <option value="image">Image URL / Upload</option>
+                                <option value="video">Short Video URL / Upload</option>
+                            </select>
+                        </div>
+                        <div id="media-input-group" class="hidden flex flex-col gap-2">
+                            <div class="flex gap-2">
+                                <input type="url" id="status-media-url" placeholder="Paste Direct Media URL..." class="flex-1 bg-wa-dark border border-wa-border rounded-xl px-3 py-2 text-xs text-wa-text focus:outline-none focus:border-wa-light">
+                                <label class="cursor-pointer bg-wa-dark hover:bg-wa-border border border-wa-border px-3 rounded-xl flex items-center justify-center text-wa-light transition text-xs" title="Upload Media File">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <input type="file" id="status-media-file" class="hidden">
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <textarea id="status-text" rows="2" placeholder="Type a status update or caption... (18+ filtered)" class="w-full bg-wa-dark border border-wa-border rounded-xl p-3 text-xs text-wa-text focus:outline-none focus:border-wa-light resize-none"></textarea>
+                        </div>
+                        <!-- Background Color Selector for Text Status -->
+                        <div id="bg-color-picker" class="flex items-center gap-2">
+                            <span class="text-xs text-wa-muted">BG:</span>
+                            <button type="button" onclick="setBgColor('#00a884')" class="w-5 h-5 rounded-full bg-[#00a884] ring-2 ring-white/50"></button>
+                            <button type="button" onclick="setBgColor('#7c3aed')" class="w-5 h-5 rounded-full bg-[#7c3aed]"></button>
+                            <button type="button" onclick="setBgColor('#db2777')" class="w-5 h-5 rounded-full bg-[#db2777]"></button>
+                            <button type="button" onclick="setBgColor('#ea580c')" class="w-5 h-5 rounded-full bg-[#ea580c]"></button>
+                            <button type="button" onclick="setBgColor('#2563eb')" class="w-5 h-5 rounded-full bg-[#2563eb]"></button>
+                        </div>
+                        <button type="submit" id="post-submit-btn" class="w-full bg-wa-light hover:bg-wa-hover text-white font-semibold py-2.5 rounded-xl text-xs transition shadow-md">
+                            Post to Status
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Active Statuses List in Sidebar -->
+                <div>
+                    <h4 class="text-xs font-semibold uppercase text-wa-muted mb-2 tracking-wider">Active Stories (24h)</h4>
+                    <div id="sidebar-stories-list" class="flex flex-col gap-2">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT VIEW AREA -->
+        <main class="flex-1 flex flex-col h-full bg-wa-dark overflow-y-auto">
+            
+            <!-- TOP BAR HEADER -->
+            <header class="bg-wa-panel border-b border-wa-border p-4 flex items-center justify-between sticky top-0 z-30">
+                <div class="flex items-center gap-3">
+                    <h2 id="main-view-title" class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-circle-notch text-wa-light"></i> Status Feed
+                    </h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-xs bg-wa-secondary border border-wa-border px-3 py-1.5 rounded-full text-wa-muted flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-wa-light"></i> 18+ Content Shield Active
+                    </span>
+                    <button onclick="renderAll()" class="bg-wa-secondary hover:bg-wa-border text-wa-muted hover:text-white p-2 rounded-xl text-xs transition" title="Refresh Feed">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- VIEW 1: STATUS FEED (Active 24 Hours) -->
+            <div id="view-feed" class="p-4 md:p-8 max-w-4xl mx-auto w-full flex flex-col gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="feed-posts-grid">
+                    <!-- Cards populated by JS -->
+                </div>
+            </div>
+
+            <!-- VIEW 2: STORIES ARCHIVE (All-Time Stored) -->
+            <div id="view-archive" class="p-4 md:p-8 max-w-4xl mx-auto w-full flex flex-col gap-6 hidden">
+                <div class="bg-wa-secondary/40 border border-wa-border p-4 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Stories Archive & Free Storage</h3>
+                        <p class="text-xs text-wa-muted">All posts ever created are permanently stored here and accessible to all users across devices.</p>
+                    </div>
+                    <span id="archive-count" class="bg-wa-light/20 text-wa-light font-bold text-xs px-3 py-1 rounded-full">0 Stored</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="archive-posts-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- VIEW 3: MY PROFILE & POSTS -->
+            <div id="view-profile" class="p-4 md:p-8 max-w-4xl mx-auto w-full flex flex-col gap-6 hidden">
+                <div class="bg-wa-panel border border-wa-border rounded-3xl p-6 flex flex-col md:flex-row items-center gap-6 shadow-xl">
+                    <img id="profile-view-avatar" src="" class="w-24 h-24 rounded-full object-cover border-4 border-wa-light shadow-md" alt="Avatar">
+                    <div class="flex-1 text-center md:text-left">
+                        <h2 id="profile-view-name" class="text-2xl font-bold text-white mb-1"></h2>
+                        <p class="text-xs text-wa-muted mb-4">Member ID: <span id="profile-view-id" class="font-mono text-wa-light"></span></p>
+                        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                            <div class="bg-wa-secondary px-4 py-2 rounded-xl border border-wa-border">
+                                <span class="block text-xs text-wa-muted">Total Posted</span>
+                                <span id="profile-stat-total" class="font-bold text-white text-base">0</span>
+                            </div>
+                            <div class="bg-wa-secondary px-4 py-2 rounded-xl border border-wa-border">
+                                <span class="block text-xs text-wa-muted">Active Status</span>
+                                <span id="profile-stat-active" class="font-bold text-wa-light text-base">None</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-white text-sm mb-4">My Status History</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="profile-posts-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // --- DATA STATE & STORAGE ---
+        const STORAGE_KEY_USERS = 'wa_status_users_v1';
+        const STORAGE_KEY_POSTS = 'wa_status_posts_v1';
+        const STORAGE_KEY_CURRENT = 'wa_status_current_user_v1';
+
+        let currentUser = null;
+        let posts = [];
+        let activeModalPostId = null;
+        let selectedBgColor = '#00a884';
+
+        // Forbidden keywords for 18+ content moderation filter
+        const NSFW_KEYWORDS = [
+            'porn', 'sex', 'nude', 'xxx', 'nsfw', 'adult', 'boobs', 'dick', 'pussy', 'cock', 
+            'escort', 'naked', 'orgy', 'strip', 'slut', 'whore', 'gangbang', 'anal', 'fetish', 'vagina'
+        ];
+
+        // --- INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            loadInitialData();
+            checkSession();
+            setupEventListeners();
+        });
+
+        function loadInitialData() {
+            try {
+                const storedPosts = localStorage.getItem(STORAGE_KEY_POSTS);
+                if (storedPosts) {
+                    posts = JSON.parse(storedPosts);
+                } else {
+                    // Seed initial demo post if empty
+                    posts = [
+                        {
+                            id: 'post_demo_1',
+                            userId: 'system_demo',
+                            userName: 'WhatsApp Official',
+                            userPhoto: 'https://placehold.co/100/00a884/ffffff?text=WA',
+                            type: 'text',
+                            content: 'Welcome to WhatsApp Status Hub! Share text, images, or short videos. Posts last for 24 hours in the feed and remain permanently in the archive.',
+                            bgColor: '#00a884',
+                            mediaUrl: '',
+                            timestamp: Date.now() - 3600000, // 1 hour ago
+                            likes: ['user_system'],
+                            views: 142,
+                            comments: [
+                                { id: 'c1', userId: 'system_demo', userName: 'WhatsApp Official', userPhoto: 'https://placehold.co/100/00a884/ffffff?text=WA', text: 'Enjoy posting and connecting!', timestamp: Date.now() - 1800000 }
+                            ]
+                        }
+                    ];
+                    savePosts();
+                }
+            } catch (e) {
+                console.error("Error loading local storage:", e);
+                posts = [];
+            }
+        }
+
+        function savePosts() {
+            try {
+                localStorage.setItem(STORAGE_KEY_POSTS, JSON.stringify(posts));
+            } catch (e) {
+                console.error("Error saving posts:", e);
+                showToast('Storage quota exceeded or error occurred.', 'error');
+            }
+        }
+
+        function checkSession() {
+            const storedUser = localStorage.getItem(STORAGE_KEY_CURRENT);
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                initAppUI();
+            } else {
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('app-screen').classList.add('hidden');
+            }
+        }
+
+        function setupEventListeners() {
+            // Login Form
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('login-name').value.trim();
+                let photo = document.getElementById('login-photo').value.trim();
+                
+                if (!photo) {
+                    photo = `https://placehold.co/150/202c33/ffffff?text=${encodeURIComponent(name.charAt(0))}`;
+                }
+
+                currentUser = {
+                    id: 'user_' + Math.random().toString(36.substring(2, 9)),
+                    name: name,
+                    photo: photo,
+                    joined: Date.now()
+                };
+
+                localStorage.setItem(STORAGE_KEY_CURRENT, JSON.stringify(currentUser));
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                initAppUI();
+                showToast('Welcome, ' + name + '!', 'success');
+            });
+
+            // Login Photo File Upload Handler
+            document.getElementById('login-photo-file').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(uploadEvent) {
+                        document.getElementById('login-photo').value = uploadEvent.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Status Media File Upload Handler
+            document.getElementById('status-media-file').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(uploadEvent) {
+                        document.getElementById('status-media-url').value = uploadEvent.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Status Creation Form Submission
+            document.getElementById('status-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Check 24-hr limit per user
+                const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
+                const userRecentPosts = posts.filter(p => p.userId === currentUser.id && p.timestamp > twentyFourHoursAgo);
+                
+                if (userRecentPosts.length >= 1) {
+                    showToast('You can only post 1 status per 24 hours. Please check your profile or wait for expiration.', 'error');
+                    return;
+                }
+
+                const type = document.getElementById('status-type').value;
+                const text = document.getElementById('status-text').value.trim();
+                const mediaUrl = document.getElementById('status-media-url').value.trim();
+
+                // 18+ Content Filter Check
+                if (containsNSFW(text) || containsNSFW(mediaUrl)) {
+                    showToast('Post rejected! 18+ or prohibited explicit content detected by the automated safety filter.', 'error');
+                    return;
+                }
+
+                if (type !== 'text' && !mediaUrl) {
+                    showToast('Please provide a media URL or upload a file for Image/Video status.', 'error');
+                    return;
+                }
+
+                if (type === 'text' && !text) {
+                    showToast('Please enter text for your status.', 'error');
+                    return;
+                }
+
+                const newPost = {
+                    id: 'post_' + Math.random().toString(36).substring(2, 9),
+                    userId: currentUser.id,
+                    userName: currentUser.name,
+                    userPhoto: currentUser.photo,
+                    type: type,
+                    content: text,
+                    bgColor: selectedBgColor,
+                    mediaUrl: mediaUrl,
+                    timestamp: Date.now(),
+                    likes: [],
+                    views: 0,
+                    comments: []
+                };
+
+                posts.unshift(newPost);
+                savePosts();
+                
+                // Reset form
+                document.getElementById('status-text').value = '';
+                document.getElementById('status-media-url').value = '';
+                document.getElementById('status-media-file').value = '';
+                
+                showToast('Status posted successfully!', 'success');
+                initAppUI();
+                renderAll();
+            });
+        }
+
+        function containsNSFW(text) {
+            if (!text) return false;
+            const lower = text.toLowerCase();
+            return NSFW_KEYWORDS.some(word => lower.includes(word));
+        }
+
+        function logout() {
+            localStorage.removeItem(STORAGE_KEY_CURRENT);
+            currentUser = null;
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('app-screen').classList.add('hidden');
+            showToast('Logged out successfully.', 'success');
+        }
+
+        function initAppUI() {
+            if (!currentUser) return;
+            document.getElementById('current-user-avatar').src = currentUser.photo;
+            document.getElementById('current-user-name').textContent = currentUser.name;
+            renderAll();
+        }
+
+        // --- TAB SWITCHING ---
+        function switchTab(tabName) {
+            ['feed', 'archive', 'profile'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-btn-${t}`);
+                btn.classList.remove('bg-wa-secondary', 'text-wa-light');
+                btn.classList.add('text-wa-muted');
+            });
+
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            activeBtn.classList.remove('text-wa-muted');
+            activeBtn.classList.add('bg-wa-secondary', 'text-wa-light');
+
+            const titles = {
+                feed: '<i class="fa-solid fa-circle-notch text-wa-light"></i> Status Feed',
+                archive: '<i class="fa-solid fa-box-archive text-wa-light"></i> Stories Archive',
+                profile: '<i class="fa-solid fa-user-gear text-wa-light"></i> My Profile & History'
+            };
+            document.getElementById('main-view-title').innerHTML = titles[tabName];
+
+            renderAll();
+        }
+
+        function toggleMediaType() {
+            const type = document.getElementById('status-type').value;
+            const mediaGroup = document.getElementById('media-input-group');
+            const bgPicker = document.getElementById('bg-color-picker');
+            
+            if (type === 'text') {
+                mediaGroup.classList.add('hidden');
+                bgPicker.classList.remove('hidden');
+            } else {
+                mediaGroup.classList.remove('hidden');
+                bgPicker.classList.add('hidden');
+            }
+        }
+
+        function setBgColor(color) {
+            selectedBgColor = color;
+            document.querySelectorAll('#bg-color-picker button').forEach(b => {
+                b.classList.remove('ring-2', 'ring-white/50');
+            });
+            event.target.classList.add('ring-2', 'ring-white/50');
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderAll() {
+            renderSidebarStories();
+            renderFeed();
+            renderArchive();
+            renderProfile();
+            checkUserCooldown();
+        }
+
+        function checkUserCooldown() {
+            if (!currentUser) return;
+            const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
+            const userRecentPosts = posts.filter(p => p.userId === currentUser.id && p.timestamp > twentyFourHoursAgo);
+            const timerEl = document.getElementById('cooldown-timer');
+            const submitBtn = document.getElementById('post-submit-btn');
+
+            if (userRecentPosts.length > 0) {
+                const expiresAt = userRecentPosts[0].timestamp + (24 * 60 * 60 * 1000);
+                const hoursLeft = Math.ceil((expiresAt - Date.now()) / (1000 * 60 * 60));
+                timerEl.textContent = `Limit reached (Resets in ~${hoursLeft}h)`;
+                timerEl.className = 'text-xs text-rose-400 font-medium';
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                timerEl.textContent = 'Ready to post';
+                timerEl.className = 'text-xs text-wa-light font-medium';
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function renderSidebarStories() {
+            const container = document.getElementById('sidebar-stories-list');
+            const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
+            const activePosts = posts.filter(p => p.timestamp > twentyFourHoursAgo);
+
+            if (activePosts.length === 0) {
+                container.innerHTML = `<p class="text-xs text-wa-muted italic p-2">No active statuses right now.</p>`;
+                return;
+            }
+
+            container.innerHTML = activePosts.map(p => `
+                <div onclick="openMediaModal('${p.id}')" class="flex items-center gap-3 p-2 rounded-xl bg-wa-secondary/40 hover:bg-wa-secondary cursor-pointer transition border border-wa-border/50">
+                    <div class="relative">
+                        <img src="${p.userPhoto}" class="w-10 h-10 rounded-full object-cover ring-2 ring-wa-light p-0.5" alt="User">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h5 class="font-bold text-xs text-white truncate">${escapeHtml(p.userName)}</h5>
+                        <span class="text-[10px] text-wa-muted">${timeAgo(p.timestamp)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderFeed() {
+            const container = document.getElementById('feed-posts-grid');
+            const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
+            const activePosts = posts.filter(p => p.timestamp > twentyFourHoursAgo);
+
+            if (activePosts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 text-center py-12 bg-wa-panel border border-wa-border rounded-3xl p-8">
+                        <i class="fa-solid fa-circle-notch text-4xl text-wa-muted mb-3 animate-spin"></i>
+                        <h3 class="text-base font-bold text-white">No active status posts</h3>
+                        <p class="text-xs text-wa-muted mt-1">Be the first to share an update today!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = activePosts.map(p => createPostCardHTML(p, false)).join('');
+        }
+
+        function renderArchive() {
+            const container = document.getElementById('archive-posts-grid');
+            document.getElementById('archive-count').textContent = `${posts.length} Stored`;
+
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 text-center py-12 bg-wa-panel border border-wa-border rounded-3xl p-8">
+                        <i class="fa-solid fa-box-archive text-4xl text-wa-muted mb-3"></i>
+                        <h3 class="text-base font-bold text-white">Archive is empty</h3>
+                        <p class="text-xs text-wa-muted mt-1">All statuses will be permanently saved here forever.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(p => createPostCardHTML(p, true)).join('');
+        }
+
+        function renderProfile() {
+            if (!currentUser) return;
+            document.getElementById('profile-view-avatar').src = currentUser.photo;
+            document.getElementById('profile-view-name').textContent = currentUser.name;
+            document.getElementById('profile-view-id').textContent = currentUser.id;
+
+            const userPosts = posts.filter(p => p.userId === currentUser.id);
+            document.getElementById('profile-stat-total').textContent = userPosts.length;
+
+            const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
+            const activeUserPosts = userPosts.filter(p => p.timestamp > twentyFourHoursAgo);
+            
+            const activeStatEl = document.getElementById('profile-stat-active');
+            if (activeUserPosts.length > 0) {
+                activeStatEl.textContent = 'Active (Expires ' + new Date(activeUserPosts[0].timestamp + 86400000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ')';
+                activeStatEl.className = 'font-bold text-wa-light text-xs';
+            } else {
+                activeStatEl.textContent = 'None Active';
+                activeStatEl.className = 'font-bold text-wa-muted text-xs';
+            }
+
+            const container = document.getElementById('profile-posts-grid');
+            if (userPosts.length === 0) {
+                container.innerHTML = `<p class="text-xs text-wa-muted italic col-span-2">You haven't posted any statuses yet.</p>`;
+                return;
+            }
+
+            container.innerHTML = userPosts.map(p => createPostCardHTML(p, false, true)).join('');
+        }
+
+        // --- POST CARD HTML BUILDER ---
+        function createPostCardHTML(post, isArchiveView, isMyProfile = false) {
+            const isLiked = currentUser && post.likes.includes(currentUser.id);
+            const isOwner = currentUser && post.userId === currentUser.id;
+            const twentyFourHoursAgo = Date.now() - (24 * 60 * 60 * 1000);
+            const isActive = post.timestamp > twentyFourHoursAgo;
+
+            let mediaRender = '';
+            if (post.type === 'image') {
+                mediaRender = `
+                    <div onclick="openMediaModal('${post.id}')" class="w-full h-56 bg-black/40 overflow-hidden cursor-pointer relative group">
+                        <img src="${post.mediaUrl}" onerror="this.src='https://placehold.co/600x400/202c33/ffffff?text=Image+Load+Error'" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="Status Media">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <i class="fa-solid fa-expand text-white text-2xl drop-shadow"></i>
+                        </div>
+                    </div>
+                `;
+            } else if (post.type === 'video') {
+                mediaRender = `
+                    <div onclick="openMediaModal('${post.id}')" class="w-full h-56 bg-black/40 overflow-hidden cursor-pointer relative group flex items-center justify-center bg-black">
+                        <video src="${post.mediaUrl}" class="w-full h-full object-cover"></video>
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition">
+                            <div class="w-12 h-12 rounded-full bg-wa-light/90 text-white flex items-center justify-center text-lg shadow-lg">
+                                <i class="fa-solid fa-play ml-0.5"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                mediaRender = `
+                    <div onclick="openMediaModal('${post.id}')" style="background-color: ${post.bgColor || '#00a884'};" class="w-full h-48 p-6 flex items-center justify-center text-center cursor-pointer relative group">
+                        <p class="text-white font-semibold text-lg drop-shadow-sm line-clamp-4">${escapeHtml(post.content)}</p>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="bg-wa-panel border border-wa-border rounded-3xl overflow-hidden shadow-lg flex flex-col justify-between">
+                    <!-- Post Header -->
+                    <div class="p-4 flex items-center justify-between border-b border-wa-border/60">
+                        <div class="flex items-center gap-3">
+                            <img src="${post.userPhoto}" class="w-10 h-10 rounded-full object-cover border border-wa-light" alt="Author">
+                            <div>
+                                <h4 class="font-bold text-xs text-white">${escapeHtml(post.userName)}</h4>
+                                <span class="text-[10px] text-wa-muted flex items-center gap-1.5">
+                                    <i class="fa-regular fa-clock"></i> ${timeAgo(post.timestamp)}
+                                    ${isArchiveView ? `<span class="px-1.5 py-0.5 rounded text-[9px] bg-wa-secondary text-wa-muted">${isActive ? 'Active' : 'Archived'}</span>` : ''}
+                                </span>
+                            </div>
+                        </div>
+                        ${isOwner ? `
+                            <button onclick="deletePost('${post.id}')" class="text-wa-muted hover:text-rose-400 p-2 rounded-lg transition" title="Delete Post">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+
+                    <!-- Post Media / Banner -->
+                    ${mediaRender}
+
+                    ${post.type !== 'text' && post.content ? `
+                        <div class="px-4 pt-3 text-xs text-wa-text">
+                            <p>${escapeHtml(post.content)}</p>
+                        </div>
+                    ` : ''}
+
+                    <!-- Post Actions & Counters -->
+                    <div class="px-4 py-3 bg-wa-secondary/40 border-t border-wa-border/60 flex items-center justify-between text-xs text-wa-muted">
+                        <div class="flex items-center gap-4">
+                            <button onclick="toggleLike('${post.id}')" class="flex items-center gap-1.5 hover:text-rose-500 transition ${isLiked ? 'text-rose-500 font-bold' : ''}">
+                                <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart text-base"></i>
+                                <span>${post.likes.length}</span>
+                            </button>
+                            <button onclick="openMediaModal('${post.id}')" class="flex items-center gap-1.5 hover:text-wa-light transition">
+                                <i class="fa-regular fa-comment text-base"></i>
+                                <span>${post.comments.length}</span>
+                            </button>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-regular fa-eye"></i>
+                            <span>${post.views || 0} views</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- INTERACTION & MODAL LOGIC ---
+        function openMediaModal(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            activeModalPostId = postId;
+
+            // Increment view counter once per session / open
+            post.views = (post.views || 0) + 1;
+            savePosts();
+
+            document.getElementById('modal-avatar').src = post.userPhoto;
+            document.getElementById('modal-username').textContent = post.userName;
+            document.getElementById('modal-time').textContent = timeAgo(post.timestamp);
+            document.getElementById('modal-like-count').textContent = post.likes.length;
+            document.getElementById('modal-view-count').textContent = post.views;
+            document.getElementById('modal-caption').textContent = post.content || '';
+
+            const isLiked = currentUser && post.likes.includes(currentUser.id);
+            const likeBtn = document.getElementById('modal-like-btn');
+            if (isLiked) {
+                likeBtn.classList.add('text-rose-500');
+            } else {
+                likeBtn.classList.remove('text-rose-500');
+            }
+
+            const container = document.getElementById('modal-content-container');
+            if (post.type === 'image') {
+                container.innerHTML = `<img src="${post.mediaUrl}" class="max-w-full max-h-[70vh] object-contain rounded-xl" alt="Media">`;
+            } else if (post.type === 'video') {
+                container.innerHTML = `<video src="${post.mediaUrl}" controls autoplay class="max-w-full max-h-[70vh] rounded-xl"></video>`;
+            } else {
+                container.innerHTML = `
+                    <div style="background-color: ${post.bgColor || '#00a884'};" class="p-12 rounded-3xl text-center max-w-xl w-full shadow-2xl flex items-center justify-center min-h-[300px]">
+                        <p class="text-white font-bold text-2xl">${escapeHtml(post.content)}</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('media-modal').classList.remove('hidden');
+        }
+
+        function closeMediaModal() {
+            document.getElementById('media-modal').classList.add('hidden');
+            activeModalPostId = null;
+            renderAll();
+        }
+
+        function toggleLike(postId) {
+            if (!currentUser) return;
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            const idx = post.likes.indexOf(currentUser.id);
+            if (idx > -1) {
+                post.likes.splice(idx, 1);
+            } else {
+                post.likes.push(currentUser.id);
+            }
+            savePosts();
+            renderAll();
+            if (activeModalPostId === postId) {
+                document.getElementById('modal-like-count').textContent = post.likes.length;
+                const isLiked = post.likes.includes(currentUser.id);
+                const likeBtn = document.getElementById('modal-like-btn');
+                if (isLiked) likeBtn.classList.add('text-rose-500');
+                else likeBtn.classList.remove('text-rose-500');
+            }
+        }
+
+        function likeCurrentModalPost() {
+            if (activeModalPostId) {
+                toggleLike(activeModalPostId);
+            }
+        }
+
+        function deletePost(postId) {
+            if (!confirm('Are you sure you want to delete this status post?')) return;
+            posts = posts.filter(p => p.id !== postId);
+            savePosts();
+            if (activeModalPostId === postId) {
+                closeMediaModal();
+            }
+            showToast('Post deleted successfully.', 'success');
+            renderAll();
+        }
+
+        // --- UTILS ---
+        function timeAgo(timestamp) {
+            const seconds = Math.floor((Date.now() - timestamp) / 1000);
+            if (seconds < 60) return 'Just now';
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `${minutes}m ago`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours}h ago`;
+            const days = Math.floor(hours / 24);
+            return `${days}d ago`;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace("'", '&#039;');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold text-white flex items-center gap-2 pointer-events-auto transition transform translate-y-2 opacity-0 ${type === 'error' ? 'bg-rose-600' : 'bg-emerald-600'}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check'} text-base"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
